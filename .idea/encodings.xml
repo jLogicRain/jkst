@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="GB2312">
+    <file url="file://$PROJECT_DIR$/../njpcglr/ISAPI_Rewrite4/isapiRewrite4.ini" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/SQL_ini/Config.ini" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/SQL_ini/redis.ini" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/pi.php" charset="GB2312" />
+    <file url="file://$USER_HOME$/Downloads/QQ/site/SQL_ini/Config.ini" charset="UTF-16" />
+    <file url="file://$USER_HOME$/Downloads/QQ/site/SQL_ini/redis.ini" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
