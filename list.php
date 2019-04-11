@@ -8,19 +8,24 @@
 include './YXL.cn.php';
 include './common.php';
 
-$TikuID         = SQLChk($_REQUEST['TikuID']);      //题库id【TikuID】
-$DriveType      = SQLChk($_REQUEST['DriveType']);   //车型【DriveType】
+$TikuID         = SQLChk($_REQUEST['t']);      //题库id【TikuID】
+$DriveType      = SQLChk($_REQUEST['c']);       //车型【DriveType】
 $userSQH        = get_REQUEST_UID();
 
-//if(!is_numeric($TikuID) || !$DriveType)
-//{
-//    outError('失败',"request params is error！");
-//    exit();
-//}
+$TikuID = fTikuID($TikuID);
+//本地测试数据
+if($_SERVER['SERVER_NAME'] == 'yb.jkst.cn')
+{
+    $userSQH    = '126000';
+    $TikuID     = 2345;
+    $DriveType  = 'xc';
+}
 
-$TikuID = 123;
-$DriveType = 'xc';
-$userSQH = '12000';
+if(!is_numeric($TikuID) || !$DriveType)
+{
+    outError("request params is error！",403);
+    exit();
+}
 
 $conn=openConn();
 $tableData = get_mysql_table($userSQH);
@@ -28,7 +33,7 @@ if($tableData['ok'])
 {
     $table = $tableData['msg'];
 } else {
-    outError(false,$tableData['msg']);exit;
+    outError($tableData['msg'],401);exit();
 }
 $sql    = "select `SortID`,`ExamID` from $table where `UserID`= '{$userSQH}' AND `AppID` = {$AppID} AND `TikuID` = '{$TikuID}' AND `DriveType` = '{$DriveType}'";
 $query  = sqlQuery($sql);
@@ -41,7 +46,7 @@ if($user_id)
     $CDT   = DT();
     $LUDay = intval(substr(DTNum($CDT),0,8));
     $IP    = myIP();
-    $sql   = "update fav_user set DownCount=DownCount+1,LUDT='".$CDT."',LUDay='".$LUDay."',aDT='".$CDT."',aDTDay='".$LUDay."',LDDT='".$CDT."',LDIP='".$IP."' where ID='{$user_id}'";
+    $sql   = "update fav_user set DownCount=DownCount+1,LUDT='".$CDT."',LUDay='".$LUDay."',aDT='".$CDT."',aDTDay='".$LUDay."',LDDT='".$CDT."',LDIP='".$IP."',aSource='".$Source."' where ID='{$user_id}'";
     sqlQuery($sql);
 }
 
@@ -58,17 +63,12 @@ if($data)
     {
         foreach ($newData as $k => $v)
         {
-            $jsonData[] = array('SortID' => $k,'BassId' => $v);
+            $jsonData[] = array('sortID' => $k,'baseId' => $v);
         }
     }
 }
 
-if($jsonData)
-{
-    outOK($jsonData);
-}else {
-    outError('失败',"No data were found！");exit();
-}
+outOK($jsonData);
 
 @mysql_free_result($result);
 @mysql_close($conn);

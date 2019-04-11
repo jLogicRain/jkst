@@ -1448,27 +1448,28 @@ function putError($code='0',$msg='',$extend=array()){
 	return $returnStr;
 }
 
-function outError($resume='失败',$result='faild')
+function outError($resume='失败',$ecode=400,$result='faild')
 {
     global $outArray;
-    $outArray['result']=$result;
-    $outArray['resume']=$resume;
-    $outArray['data']='';
-    //wLog(json_encode($outArray));
+    $outArray['result']     = $result;
+    $outArray['resume']     = $resume;
+    $outArray['data']       = array();
+    $outArray['datetime']   = date('Y-m-d H:i:s',time());
+    $outArray['ecode']      = $ecode;
     echo json_encode($outArray);	unset($outArray);
 }
 
-function outOK($rowArray='')
+function outOK($rowArray=array(),$resume='成功',$result='success')
 {
     global $outArray;
     global $JSONCALL;
-    $outArray['data']=$rowArray;
-    //print_r($rowArray);
-    $outArray['ecode'] = 200;
+    $outArray['result']     = $result;
+    $outArray['resume']     = $resume;
+    $outArray['data']       = $rowArray;
+    $outArray['datetime']   = date('Y-m-d H:i:s',time());
+    $outArray['ecode']      = 200;
     $outJSON=json_encode($outArray);
     if($JSONCALL){$outJSON=$JSONCALL.'('.$outJSON.')';}
-    //wLog($outJSON);
     echo $outJSON;	unset($outArray);unset($rowArray);unset($outJSON);
 }
-
 ?>

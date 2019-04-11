@@ -20,11 +20,11 @@ elseif(stripos('YXL'.$UA,'com.runbey.jkst/')>0){$isJKSTAPP='Y';}
 	AppID		11-jsyks.com	12-ybjk.com		13-jkbl.com			19-jiakaoshuati.com
 */
 
+$Source = "error";
 
 if($isYBJKAPP){$AppID=12;		$Source='YBJK';}
 elseif($isJKBLAPP){$AppID=13;	$Source='JKBL';}
 elseif($isJKSTAPP){$AppID=19;	$Source='JKST';}
-$AppID = 19;
 if(!is_numeric($AppID)){$AppID=$_REQUEST['appid'];}
 
 if(!is_numeric($AppID)){die(__LINE__.'Line');}
